@@ -19,7 +19,7 @@ var VotingList = React.createClass({
     var pubList = state.pubList;
     var pubs = pubList.map(function(pub) {
       return (
-        <PubListing name={pub.name} description={pub.description} />
+        <PubListing data={pub} />
       )
     })
     if (this.state.emailAddress) {
@@ -51,10 +51,12 @@ var PubListing = React.createClass({
     return (
       <div className="pubListing">
         <h3 className="pubListingName">
-          {this.props.name}
+          {this.props.data.name}
         </h3>
+        <img className="pubImg" src={"images/" + this.props.data.fileName} />
+        <a className="pubLink" href={this.props.data.website}>Website</a>
         <p className="pubDescription">
-          {this.props.description}
+          {this.props.data.description}
         </p>
         <input type="submit" className="pubVote" value="Vote" />
       </div>
