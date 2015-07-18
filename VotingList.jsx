@@ -74,6 +74,7 @@ var PubListing = React.createClass({
           {this.props.data.name}
         </h3>
         <img className="pubImg" src={"images/" + this.props.data.fileName} />
+        <br/>
         <a className="pubLink" href={this.props.data.website}>Website</a>
         <p className="pubDescription">
           {this.props.data.description}

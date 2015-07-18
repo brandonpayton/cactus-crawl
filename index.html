@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello React!</title>
+    <title>Cactus Crawl - The pub crawl voting booth</title>
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/underscore/underscore.js"></script>
     <script src="node_modules/react/dist/react.js"></script>
@@ -19,8 +19,11 @@
     <script type="text/jsx">
       React.render(
         <div>
-					<h1>Welcome to Cactus Crawl!</h1>
-					<p>Cactus Crawl is a pub crawl voting app.</p>
+          <div id="header">
+            <img src="images/cactusDrinking.png" />
+            <h1>Welcome to Cactus Crawl!</h1>
+            <p>Cactus Crawl is a pub crawl voting app.</p>
+          </div>
           <VotingList/>
         </div>,
         document.getElementById('example')
