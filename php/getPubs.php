@@ -2,15 +2,17 @@
 date_default_timezone_set('America/New_York');
 include 'conn.php';
 
-$mysqli = new mysqli($DBServer,$DBUser,$DBPass,$DBName);
+$mysqli = mysqli_connect($DBServer,$DBUser,$DBPass,$DBName);
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }		
-$sql = $mysqli -> prepare('SELECT id, name, address, phoneNumber, fileName, website, description FROM pubListing');
+$sql = 'SELECT id, name, address, phoneNumber, fileName, website, description FROM pubListing';
+$output = array();
+$result = $mysqli->query($sql);
+while ($row = $result->fetch_assoc()) {
+  $output[] = $row;
+}
 
-$sql -> execute();
-$results = mysqli_fetch_all ($sql);
-
-echo(json_encode($results));
+echo(json_encode($output));
 
 ?>
