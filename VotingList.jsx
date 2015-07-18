@@ -1,14 +1,16 @@
 var VotingList = React.createClass({
   getInitialState: function () {
     return {
-      pubList: []
+      pubList: [],
+      emailAddress: "",
+      addVote: this.addVote
     };
   },
 
   componentWillMount: function () {
     var self = this;
     $.get("stub/pubList.json").then(function (pubList) {
-      self.setState(_.assign({}, { pubList: pubList }));
+      self.setState({ pubList: pubList });
     });
   },
 
@@ -20,12 +22,27 @@ var VotingList = React.createClass({
         <PubListing name={pub.name} description={pub.description} />
       )
     })
-    return (
-      <div id="votingList">
-        <h1>Pubs to vote on</h1>
-        {pubs}
-      </div>
-    );
+    if (this.state.emailAddress) {
+      return (
+        <div id="votingList">
+          <h1>Pubs to vote on</h1>
+          {pubs}
+        </div>
+      );
+    }
+    else {
+      return (
+        <EmailPrompt submit={this.saveEmailAddress}/>
+      );
+    }
+  },
+
+  addVote: function (pubId) {
+    console.log("Add vote for " + pubId + " from " + this.emailAddress);
+  },
+
+  saveEmailAddress: function (emailAddress) {
+    this.setState({ emailAddress: emailAddress });
   }
 });
 
