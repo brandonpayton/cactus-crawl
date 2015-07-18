@@ -4,7 +4,7 @@
 //Authors: Anthony Rivas
 date_default_timezone_set('America/New_York');
 $username = 'myobliqu_admin'
-$password = 'Ironman0830!';
+$password = 'fill with Password';
 $host = 'localhost';
 $dbname = 'myobliqu_cactushack';
 ?>
