@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Hello React!</title>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/underscore/underscore.js"></script>
     <script src="node_modules/react/dist/react.js"></script>
     <script src="node_modules/react/dist/JSXTransformer.js"></script>
     <script src="node_modules/react-router/umd/ReactRouter.js"></script>
@@ -17,7 +19,7 @@
         <div>
 					<h1>Welcome to Cactus Crawl!</h1>
 					<p>Cactus Crawl is a pub crawl voting app.</p>
-          <EmailPrompt></EmailPrompt>
+          <VotingList/>
         </div>,
         document.getElementById('example')
       );
