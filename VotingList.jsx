@@ -2,14 +2,15 @@ var VotingList = React.createClass({
   getInitialState: function () {
     return {
       pubList: [],
-      emailAddress: "",
-      addVote: this.addVote
+      emailAddress: ""
     };
   },
 
   componentWillMount: function () {
     var self = this;
-    $.get("stub/pubList.json").then(function (pubList) {
+    $.getJSON(
+      'http://myoblique.com/cactushack/getPubs.php'
+    ).then(function (pubList) {
       self.setState({ pubList: pubList });
     });
   },
@@ -19,9 +20,9 @@ var VotingList = React.createClass({
     var pubList = state.pubList;
     var pubs = pubList.map(function(pub) {
       return (
-        <PubListing data={pub} />
+        <PubListing data={pub}  addVote={this.addVote} />
       )
-    })
+    }, this);
     if (this.state.emailAddress) {
       return (
         <div id="votingList">
@@ -39,14 +40,33 @@ var VotingList = React.createClass({
 
   addVote: function (pubId) {
     console.log("Add vote for " + pubId + " from " + this.emailAddress);
+    return $.get('http://myoblique.com/cactushack/submitVote.php', {
+      email: this.state.emailAddress,
+      vote: pubId
+    }).then(function () {
+      console.log("great success");
+    }, function (error) {
+      console.error("catastrophic failure", error)
+    });
   },
 
   saveEmailAddress: function (emailAddress) {
+    console.log("Email address", emailAddress);
     this.setState({ emailAddress: emailAddress });
   }
 });
 
 var PubListing = React.createClass({
+  vote: function () {
+    var voteButtonNode = React.findDOMNode(this.refs.voteButton);
+    voteButtonNode.disabled = true;
+    this.props.addVote(this.props.data.id).then(function () {
+      // Do nothing
+    }, function () {
+      voteButtonNode.disabled = false;
+    });
+  },
+
   render: function () {
     return (
       <div className="pubListing">
@@ -58,7 +78,7 @@ var PubListing = React.createClass({
         <p className="pubDescription">
           {this.props.data.description}
         </p>
-        <input type="submit" className="pubVote" value="Vote" />
+        <input ref="voteButton" type="button" className="pubVote" value="Vote" onClick={this.vote} />
       </div>
     )
   }
